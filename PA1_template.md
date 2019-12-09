@@ -5,8 +5,10 @@ output:
     keep_md: true
 ---
 
+
 ## Loading and preprocessing the data analysis
-```{r}
+
+```r
 # extract the data from the archive
 unzip("activity.zip")
 
@@ -15,12 +17,9 @@ df <- read.csv("activity.csv", colClasses = c("integer", "Date", "integer"))
 ```
 
 ## What is mean total number of steps taken per day?
-```{r}
-# Calculate the total number of steps taken per day
-stepsPerDay <- aggregate(df$steps, by=list(dt=df$date), FUN=sum)
 
-# plot histogram of steps per day
-ggplot(df, aes(date, steps)) + geom_bar(stat="identity")
+```r
+stepsPerDay <- aggregate(df$steps, by=list(dt=df$date), FUN=sum)
 ```
 
 ## What is the average daily activity pattern?
