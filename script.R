@@ -4,13 +4,11 @@ unzip("activity.zip")
 # read the data from the file into a dataframe
 df <- read.csv("activity.csv", colClasses = c("integer", "Date", "integer"))
 
-# Calculate the total number of steps taken per day
-stepsPerDay <- aggregate(df$steps, by=list(dt=df$date), FUN=sum)
-
 # plot histogram of steps per day
-ggplot(df, aes(date, steps)) + geom_bar(stat="identity")
+ggplot(remove_missing(df, na.rm=T), aes(date, steps)) + geom_bar(stat="identity")
 
 # Calculate and report the mean and median of the total number of steps taken per day
+stepsPerDay <- aggregate(df$steps, by=list(dt=df$date), FUN=sum)
 spdMean <- mean(stepsPerDay$x, na.rm = TRUE)
 spdMedian <- median(stepsPerDay$x, na.rm = TRUE)
 
