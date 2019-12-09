@@ -25,8 +25,8 @@ df <- read.csv("activity.csv", colClasses = c("integer", "Date", "integer"))
 
 
 ```r
-library(ggplot2)
-ggplot(remove_missing(df, na.rm=T), aes(date, steps)) + geom_bar(stat="identity")
+stepsPerDay <- aggregate(df$steps, list(dt=df$date), sum)
+hist(stepsPerDay$x, breaks=50)
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
@@ -35,7 +35,6 @@ ggplot(remove_missing(df, na.rm=T), aes(date, steps)) + geom_bar(stat="identity"
 
 
 ```r
-stepsPerDay <- aggregate(df$steps, list(dt=df$date), sum)
 cat(mean(stepsPerDay$x, na.rm = TRUE))
 ```
 
@@ -58,6 +57,7 @@ cat(median(stepsPerDay$x, na.rm = TRUE))
 
 ```r
 avgSteps <- aggregate(df$steps, list(interval=df$interval), FUN=mean, na.rm=TRUE)
+library(ggplot2)
 ggplot(avgSteps, aes(interval, x)) + geom_line()
 ```
 
@@ -105,7 +105,8 @@ imputed <- merged[c("steps", "date", "interval")]
 
 
 ```r
-ggplot(imputed, aes(date, steps)) + geom_bar(stat="identity")
+stepsPerDay2 <- aggregate(imputed$steps, list(imputed=imputed$date), sum)
+hist(stepsPerDay2$x, breaks=50)
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
@@ -114,7 +115,6 @@ ggplot(imputed, aes(date, steps)) + geom_bar(stat="identity")
 ...and Calculate and report the **mean** and **median** total number of steps taken per day.
 
 ```r
-stepsPerDay2 <- aggregate(imputed$steps, by=list(imputed=imputed$date), FUN=sum)
 cat(mean(stepsPerDay2$x))
 ```
 
